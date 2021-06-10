@@ -1,6 +1,6 @@
 # SpotifyApiExploration
 
-Do you ever hear a song on the radio or Top 100 and think, "How did this song get this popular?". Numerous complex factors like promotion, word of mouth, fortunate timing, countless others contribute to a song blowing up. But is there something numeric and calculable about the audio track itself that can answer the question: What makes a song popular? 
+Do you ever hear a song on the radio or Top 100 and think, "How did this song get this popular?". Numerous complex factors like promotion, word of mouth, fortunate timing, countless other qualities contribute to a song blowing up. But is there something numeric and calculable about the audio track itself that can answer the question: What makes a song popular? 
 
 In this project, I explored what insights machine learning algorithms could provide in predicting song popularity using Spotify's API. This API provides a ton of useful attributes about each track like the song's tempo, energy, instrumentalness, and much more. Obvious factors of a song like the artist and genre will hugely influence the song's popularity, but I wanted to attempt to predict what song would be big based on these audible features alone.
 
