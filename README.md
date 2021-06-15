@@ -79,7 +79,15 @@ After this, I ran the data through a number of learning methods to try to best p
 
 I was proud to achieve a mean absolute error of only ~7.5 for my best model, meaning that on a scale of 1-100 in terms of track popularity, the best model predicted within +/- 7.5 of the true popularity, even without potentially useful features like track artist. While this wasn't dramatically better than the 10 MSE produced by the linear regression, a 25% improvement was still good to see.
 
-Finally, I produced a number of error visualizations to see where the model was having trouble. One interesting obeservation was how the error varied for different genres of music:
+Finally, I produced a number of error visualizations to see where the model was having trouble. 
+
+![image](https://user-images.githubusercontent.com/25894069/122130734-ee5d4d00-cdec-11eb-91e8-8df882c49d81.png)
+
+![image](https://user-images.githubusercontent.com/25894069/122130681-de456d80-cdec-11eb-9cc8-a9eff9630464.png)
+
+![image](https://user-images.githubusercontent.com/25894069/122130701-e30a2180-cdec-11eb-8556-b0a3273136f8.png)
+
+One interesting obeservation was how the error varied for different genres of music:
 
 ![image](https://user-images.githubusercontent.com/25894069/121953776-d618ff80-cd12-11eb-81aa-ee4c8e0a2281.png)
 
