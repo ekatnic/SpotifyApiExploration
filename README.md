@@ -73,6 +73,8 @@ Once I had nailed down what features I wanted to explore, I started by conductin
 | master_popular_genre_r&b    | 1.4465    | 0.469    | 3.086   | 0.002   | 0.528     | 2.365     |
 | master_popular_genre_rock   | -3.0339   | 0.362    | -8.372  | 0       | -3.744    | -2.324    |
 
+Features like danceability, liveness, time signature, and genre classification were huge determinants of popularity.
+
 After this, I ran the data through a number of learning methods to try to best predict popularity given these qualities. Much to the chagrin of my PC, I trained a number of Machine Learning algorithms on the data using GridSearches to tune hyperparameters and was left with the following results for each model:
 
 ![image](https://user-images.githubusercontent.com/25894069/122119268-d4683e00-cddd-11eb-8099-683732aff735.png)
