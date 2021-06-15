@@ -16,15 +16,14 @@ From there I wanted to see what features I had for each song and what track qual
 Once I had nailed down what features I wanted to explore, I started by conducting a basic multiple linear regression to get a general idea of which variables were predictive of popularity. After this, I ran the data through a number of learning methods to try to best predict popularity given these qualities. Much to the chagrin of my PC, I trained a number of Machine Learning algorithms on the data using GridSearches to tune hyperparameters and was left with the following results for each model:
 
 I was proud to achieve a mean absolute error of only ~7.5 for my best model, meaning that on a scale of 1-100 in terms of track popularity, the best model predicted within +/- 7.5 of the true popularity, even without potentially useful features like track artist. While this wasn't dramatically better than the 10 MSE produced by the linear regression, a 25% improvement was still good to see.
-
 ![image](https://user-images.githubusercontent.com/25894069/122119268-d4683e00-cddd-11eb-8099-683732aff735.png)
-
-Check out the [Spotify_Analyze_Popularity.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Popularity.ipynb) notebook to see my full code for what qualities of a song are best used to predict popularity. 
 
 One interesting takeaway was reflecting how the error varied for different genres of music:
 ![image](https://user-images.githubusercontent.com/25894069/121953776-d618ff80-cd12-11eb-81aa-ee4c8e0a2281.png)
 
 It seems that its much easier to predict whether an Indie or classical song will succeed compared to predicting whether or not a pop song will. This may be because of how broad the classification of pop is, as patterns may be harder to nail down.
+
+Check out the [Spotify_Analyze_Popularity.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Popularity.ipynb) notebook to see my full code for what qualities of a song are best used to predict popularity. 
 
 From there, I took on another challenge of trying to predict a song's genre based on these audio features alone, again excluding artist, as this essentially gave the genre away. See the full notebook of exploration here: [Spotify_Generate_Tracks.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Genre.ipynb). This one took significantly more data massaging, and unfortunately wasn't as accurate given it's multiclass classification challenge. Given 1 guess to predict the genre amongst the top 7 most popular genres (alternative, country, hip-hop, house, indie, pop, r&b and rock), it was only correct about 53% of the time. But hey, for an 8-way classification, this wasn't too bad. For fun, I also checked how often we would predict the genre if given 2 changes to guess corectly, and that raised the success rate to 73%, so at least we were in the right overall song-type.
 
