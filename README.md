@@ -1,4 +1,4 @@
-# SpotifyApiExploration - In Progress
+# SpotifyApiExploration
 
 ## Predicting Track Popularity
 Do you ever hear a song on the radio or Top 100 and think, "How did *this* song get *this* popular?". Numerous complex factors like promotion, word of mouth, fortunate timing, and countless other qualities contribute to a song blowing up. But is there something numeric and calculable about the audio track itself that increases the chance that a song charts at the top? Is it the tempo, the danceability, the acousticness? Through this analysis, I hope to find some answer to the question: What makes a song a hit?
@@ -97,7 +97,7 @@ It seems that its much easier to predict whether an Indie or classical song will
 
 Check out the [Spotify_Analyze_Popularity.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Popularity.ipynb) notebook to see my full code for what qualities of a song are best used to predict popularity. 
 
-## Predicting Track Genre
+## Predicting Track Genre - In Progress
 From there, I took on another challenge of trying to predict a song's genre based on these audio features alone, again excluding artist, as this essentially gave the genre away. See the full notebook of exploration here: [Spotify_Generate_Tracks.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Genre.ipynb). 
 
 This one took significantly more data massaging, and unfortunately wasn't as accurate given it's multiclass classification challenge. Given 1 guess to predict the genre amongst the top 7 most popular genres (alternative, country, hip-hop, house, indie, pop, r&b and rock), it was only correct about 53% of the time. But hey, for a 7-way classification, this wasn't too bad. For fun, I also checked how often we would predict the genre if given 2 changes to guess corectly, and that raised the success rate to 73%, so at least we were in the right overall song-type.
