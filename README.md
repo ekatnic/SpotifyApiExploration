@@ -1,18 +1,24 @@
 # SpotifyApiExploration
+In this project, I had 2 goals:
+1. Build a machine learning model to predict a Spotify track's popularity be based on its audio qualities.
+2. Build a machine learning model to predict a Spotify track's genre based on its audio qualities.
 
-## Predicting Track Popularity
-Do you ever hear a song on the radio or Top 100 and think, "How did *this* song get *this* popular?". Numerous complex factors like promotion, word of mouth, fortunate timing, and countless other qualities contribute to a song blowing up. But is there something numeric and calculable about the audio track itself that increases the chance that a song charts at the top? Is it the tempo, the danceability, the acousticness? Through this analysis, I hope to find some answer to the question: What makes a song a hit?
+## 0. Data Preprocessing
+I started by scraping about 80,000 songs from Spotify's API and cleaning them up to explore. This included basic things like dropping duplicates, and more complex munging tasks like summarizing sub-genres of songs into more generalized genres that I could work with. My code for calling this API and cleaning the data can be found in [Spotify_Generate_Tracks.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Generate_Tracks.ipynb) and [Spotify_Clean_Data.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Clean_Data.ipynb).
 
-In this project, I explored what insights machine learning algorithms could provide in predicting song popularity using Spotify's API. This API provides a ton of useful attributes about each track like the song's tempo, energy, instrumentalness, and much more. Obvious factors of a song like the artist and genre will hugely influence the song's popularity, but I wanted to attempt to predict what song would be big based on these audible features alone.
-
-I started by scraping about 80,000 songs from Spotify's API and cleaning them up to explore. This included basic things like dropping duplicates, and more complex munging tasks like summarizing sub-genres of songs into more generalized genres that I could work with. My code for calling this API and cleaning the data can be found in [Spotify_Generate_Tracks.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Generate_Tracks.ipynb) and [Spotify_Clean_Data.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Clean_Data.ipynb). Here is a sample of what the data looked like:
+Here is a sample of what the data looked like once it was scraped from the API and cleaned up:
 
 | track_pop | track_name     | track_id               | track_year | track_spotify_genre | art_name                            | art_id                 | alb_name   | alb_id                 | art_genre                                           | duration_ms | time_signature | key | loudness | energy | speechiness | acousticness | mode | tempo   | valence | danceability | instrumentalness | liveness | genre_words                                         | master_popular_genre |
 |-----------|----------------|------------------------|------------|---------------------|-------------------------------------|------------------------|------------|------------------------|-----------------------------------------------------|-------------|----------------|-----|----------|--------|-------------|--------------|------|---------|---------|--------------|------------------|----------|-----------------------------------------------------|----------------------|
 | 50        | Clusterhug     | 65yrKuYdBYsMA1ItIngmjc | 2020       | rock                | I DONT KNOW HOW   BUT THEY FOUND ME | 0Raaw7kr1Vzat4ZvHzjsJR | RAZZMATAZZ | 7q8hYYZgsIQCXibLzwiPll | ['alt z', 'indie   pop', 'modern alternative roc... | 192066      | 4              | 0   | -4.067   | 0.837  | 0.052       | 0.00324      | 1    | 121.901 | 0.23    | 0.476        | 0                | 0.105    | {'alt': 1, 'z':   1, 'indie': 1, 'pop': 1, 'mode... | rock                 |
 | 57        | Fare Thee Well | 1fzw0qGcB6xs4IBXhdfAkj | 2020       | rock                | Stone Temple   Pilots               | 2UazAtjfzqBF0Nho2awK4z | Perdida    | 27evZfDFySSv4dcje8afMI | ['alternative   metal', 'alternative rock', 'gru... | 261880      | 4              | 7   | -8.709   | 0.371  | 0.0272      | 0.547        | 1    | 66.853  | 0.196   | 0.431        | 0.0154           | 0.0921   | {'alternative':   2, 'metal': 2, 'rock': 4, 'gru... | rock                 |
 
-From there I wanted to see what features I had for each song and what track qualities would be worth dropping, either because it was TOO predictive and would overpower all other features (artist name), because they were redundant and covariant (energy and loudness), or because they simply weren't predictive of popularity at all (mode). I used a few visuals like the following distributions and correlation heatmap to make these decisions:
+## 1. Predicting Track Popularity
+Do you ever hear a song on the radio or Top 100 and think, "How did *this* song get *this* popular?". Numerous complex factors like promotion, word of mouth, fortunate timing, and countless other qualities contribute to a song blowing up. But is there something numeric and calculable about the audio track itself that increases the chance that a song charts at the top? Is it the tempo, the danceability, the acousticness? Through this analysis, I hope to find some answer to the question: What makes a song a hit?
+
+In this section, I explored what insights machine learning algorithms could provide in predicting song popularity using Spotify's API. This API provides a ton of useful attributes about each track like the song's tempo, energy, instrumentalness, and much more. Obvious factors of a song like the artist and genre will hugely influence the song's popularity, but I wanted to attempt to predict what song would be big based on these audible features alone.
+
+To start, I wanted to see what features I had for each song and what track qualities would be worth dropping, either because it was TOO predictive and would overpower all other features (artist name), because they were redundant and covariant (energy and loudness), or because they simply weren't predictive of popularity at all (mode). I used a few visuals like the following distributions and correlation heatmap to make these decisions:
 
 ![image](https://user-images.githubusercontent.com/25894069/122130209-29ab4c00-cdec-11eb-8fda-e765e54cd7c0.png)
 
@@ -97,21 +103,12 @@ It seems that its much easier to predict whether an Indie or classical song will
 
 Check out the [Spotify_Analyze_Popularity.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Popularity.ipynb) notebook to see my full code for what qualities of a song are best used to predict popularity. 
 
-## Predicting Track Genre - In Progress
+## 2. Predicting Track Genre
 From there, I took on another challenge of trying to predict a song's genre based on these audio features alone, again excluding artist, as this essentially gave the genre away. See the full notebook of exploration here: [Spotify_Generate_Tracks.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Genre.ipynb). 
 
-This one took significantly more data massaging, and unfortunately wasn't as accurate given it's multiclass classification challenge. Given 1 guess to predict the genre amongst the top 7 most popular genres (alternative, country, hip-hop, house, indie, pop, r&b and rock), it was only correct about 53% of the time. But hey, for a 7-way classification, this wasn't too bad. For fun, I also checked how often we would predict the genre if given 2 changes to guess corectly, and that raised the success rate to 73%, so at least we were in the right overall song-type.
+The goal was to build a multi-class classifier that could predict a track's genre based on its audible features. I used the same dataset produced in part 0, but filtered to only tracks within the 7 most common genres. Those were the following:
 
-```
-Accuracy predicting Alternative: 0.4980237154150198
-Accuracy predicting Country: 0.6268781302170284
-Accuracy predicting Hip-Hop: 0.637233259749816
-Accuracy predicting House: 0.6541666666666667
-Accuracy predicting Indie: 0.37308622078968573
-Accuracy predicting Pop: 0.49044585987261147
-Accuracy predicting R&B: 0.43853820598006643
-Accuracy predicting Rock: 0.37142857142857144
-```
+
 
 Overall, I found this to be an intriguing project that made me rethink what subtle factors contribute to make a song blow up on the charts. In terms of future exploration, I plan on investigating whether these trends have changed over the years, i.e do the qualities that made a song popular in 2010 still apply in 2021?
 
