@@ -203,13 +203,13 @@ Accuracy predicting rock : 0.6690451919809718
 This model produced results that were a bit of a blend of the above 2 results. Overall, accuracy was the same. However, it had worse pop accuracy than approach A, but better pop accuracy than approach B. Conversely, it had better accuracy for the minority classes than approach A, but worse accuracy on these for approach B.
 
 The accuracy of each different approach was summarized as follows:
-|          |         |                  | Data to Build Model |                    |
+|          |         |                  | *Data to Build Model* |                    |
 |----------|---------|------------------|---------------------|--------------------|
-|          |         | Original Dataset | Undersample Pop     | SMOTE Oversampling |
+|          |         | A. Original Dataset | B. Undersample Pop     | C. SMOTE Oversampling |
 |          | overall | **0.681**            | 0.679               | 0.678              |
 |          | country | 0.784            | **0.811**              | 0.796              |
 |          | hiphop  | 0.771            | **0.838**               | 0.783              |
-| Accuracy | house   | 0.657            | **0.735 **              | 0.700              |
+| *Accuracy* | house   | 0.657            | **0.735**              | 0.700              |
 |          | indie   | 0.636            | **0.665**               | 0.638              |
 |          | pop     | **0.700**            | 0.528               | 0.599              |
 |          | r&b     | 0.424            | 0.548               | **0.549**              |
