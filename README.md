@@ -125,7 +125,7 @@ The imbalance of classes in the above list of genre counts was a major piece of 
 ### Building a model based on the imbalanced classes above
  A. First, I built a basic random forest model using the data above with no changes to the class distribution. The results of that model were the following:
 
-  Model Accuracy: 0.6806779969099337
+  **Model Accuracy: 0.6806779969099337**
   
   Accuracy predicting country : 0.7844257366205653
   
@@ -159,7 +159,7 @@ B.  From here, I modified the dataset by undersampling the number of pop tracks.
 
 The overall accuracy of this model was about the same, but the change to the training data impacted where the model was accurate and where it was not:
 
-Model Accuracy: 0.6788518008030203
+**Model Accuracy: 0.6788518008030203**
 
 Accuracy predicting country : 0.8107438016528926
 
@@ -181,7 +181,7 @@ While accuracy in predicting pop dropped by over 15%, other genres like hiphop, 
 
 C. Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
 
-Model Accuracy: 0.6776788148686722
+**Model Accuracy: 0.6776788148686722**
 
 Accuracy predicting country : 0.796452194828623
 
