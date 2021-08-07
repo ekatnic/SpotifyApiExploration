@@ -123,7 +123,8 @@ The goal was to build a multi-class classifier that could predict a track's genr
 The imbalance of classes in the above list of genre counts was a major piece of this section of my project. I tried to build a few different models based on separate sampling techniques on the data. I performed the following 3 approaches to try to improve the model:
 
 ### Building a model based on the imbalanced classes above
- A. First, I built a basic random forest model using the data above with no changes to the class distribution. The results of that model were the following:
+#### A.
+ First, I built a basic random forest model using the data above with no changes to the class distribution. The results of that model were the following:
 
   **Model Accuracy: 0.6806779969099337**
   
@@ -145,7 +146,7 @@ The imbalance of classes in the above list of genre counts was a major piece of 
 
   While this model performed relatively well, it was clear that the model was learning to favor pop tracks heavily. As visualize by the verticle column where `x = pop`, the model defaulted to classifying the sample as pop whenever there was doubt. Because of this, the accuracy in predicting other genres suffered as it overcompensated toward pop. 
 
-B.  From here, I modified the dataset by undersampling the number of pop tracks. Instead of having 7,000 more pop tracks than any other, I reduced the number of pop tracks to create a more even balance.
+#### B.  From here, I modified the dataset by undersampling the number of pop tracks. Instead of having 7,000 more pop tracks than any other, I reduced the number of pop tracks to create a more even balance.
 
 | Genre   | TrackCount |
 |---------|------------|
@@ -179,7 +180,7 @@ Accuracy predicting rock : 0.6851512373968836
 
 While accuracy in predicting pop dropped by over 15%, other genres like hiphop, house, and country, increased by 5-10% each. This makes sense, as the undersampling reduced the likelihood that the model predicted overpredicted pop. 
 
-C. Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
+#### C. Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
 
 **Model Accuracy: 0.6776788148686722**
 
@@ -200,6 +201,19 @@ Accuracy predicting rock : 0.6690451919809718
 ![image](https://user-images.githubusercontent.com/25894069/128584329-f8e36532-c356-4757-8b63-695e05518ef9.png)
 
 This model produced results that were a bit of a blend of the above 2 results. Overall, accuracy was the same. However, it had worse pop accuracy than approach A, but better pop accuracy than approach B. Conversely, it had better accuracy for the minority classes than approach A, but worse accuracy on these for approach B.
+
+The accuracy of each different approach was summarized as follows:
+|          |         |                  | Data to Build Model |                    |
+|----------|---------|------------------|---------------------|--------------------|
+|          |         | Original Dataset | Undersample Pop     | SMOTE Oversampling |
+|          | overall | **0.681**            | 0.679               | 0.678              |
+|          | country | 0.784            | **0.811**              | 0.796              |
+|          | hiphop  | 0.771            | **0.838**               | 0.783              |
+| Accuracy | house   | 0.657            | **0.735 **              | 0.700              |
+|          | indie   | 0.636            | **0.665**               | 0.638              |
+|          | pop     | **0.700**            | 0.528               | 0.599              |
+|          | r&b     | 0.424            | 0.548               | **0.549**              |
+|          | rock    | 0.635            | **0.685**               | 0.669              |
 
 In the notebook, I detail a longer discussion of the "why" , but I chose to explore the results of approach C for the conclusion of the project.
 
