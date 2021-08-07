@@ -126,13 +126,21 @@ The imbalance of classes in the above list of genre counts was a major piece of 
  A. First, I built a basic random forest model using the data above with no changes to the class distribution. The results of that model were the following:
 
   Model Accuracy: 0.6806779969099337
+  
   Accuracy predicting country : 0.7844257366205653
+  
   Accuracy predicting hiphop : 0.7706289671090595
+  
   Accuracy predicting house : 0.6566682048915552
+  
   Accuracy predicting indie : 0.6363636363636364
+  
   Accuracy predicting pop : 0.6996659046949182
+  
   Accuracy predicting r&b : 0.42412451361867703
+  
   Accuracy predicting rock : 0.6347264695888549
+  
 ![image](https://user-images.githubusercontent.com/25894069/128584091-26f42a6f-a723-4d47-9346-042dbe28a77c.png)
 
   While this model performed relatively well, it was clear that the model was learning to favor pop tracks heavily. As visualize by the verticle column where `x = pop`, the model defaulted to classifying the sample as pop whenever there was doubt. Because of this, the accuracy in predicting other genres suffered as it overcompensated toward pop. 
@@ -152,13 +160,21 @@ B.  From here, I modified the dataset by undersampling the number of pop tracks.
 The overall accuracy of this model was about the same, but the change to the training data impacted where the model was accurate and where it was not:
 
 Model Accuracy: 0.6788518008030203
+
 Accuracy predicting country : 0.8107438016528926
+
 Accuracy predicting hiphop : 0.8380332610267535
+
 Accuracy predicting house : 0.7351515151515151
+
 Accuracy predicting indie : 0.6652871184687015
+
 Accuracy predicting pop : 0.5277777777777778
+
 Accuracy predicting r&b : 0.5476190476190477
+
 Accuracy predicting rock : 0.6851512373968836
+
 ![image](https://user-images.githubusercontent.com/25894069/128584230-49412205-e6a0-4bcc-b9c0-46c98b7577a6.png)
 
 While accuracy in predicting pop dropped by over 15%, other genres like hiphop, house, and country, increased by 5-10% each. This makes sense, as the undersampling reduced the likelihood that the model predicted overpredicted pop. 
@@ -166,13 +182,21 @@ While accuracy in predicting pop dropped by over 15%, other genres like hiphop, 
 C. Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
 
 Model Accuracy: 0.6776788148686722
+
 Accuracy predicting country : 0.796452194828623
+
 Accuracy predicting hiphop : 0.7830351990767456
+
 Accuracy predicting house : 0.7000461467466543
+
 Accuracy predicting indie : 0.6382734912146677
+
 Accuracy predicting pop : 0.5987339546333743
+
 Accuracy predicting r&b : 0.5491939966648138
+
 Accuracy predicting rock : 0.6690451919809718
+
 ![image](https://user-images.githubusercontent.com/25894069/128584329-f8e36532-c356-4757-8b63-695e05518ef9.png)
 
 This model produced results that were a bit of a blend of the above 2 results. Overall, accuracy was the same. However, it had worse pop accuracy than approach A, but better pop accuracy than approach B. Conversely, it had better accuracy for the minority classes than approach A, but worse accuracy on these for approach B.
