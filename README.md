@@ -146,7 +146,8 @@ The imbalance of classes in the above list of genre counts was a major piece of 
 
   While this model performed relatively well, it was clear that the model was learning to favor pop tracks heavily. As visualize by the verticle column where `x = pop`, the model defaulted to classifying the sample as pop whenever there was doubt. Because of this, the accuracy in predicting other genres suffered as it overcompensated toward pop. 
 
-#### B.  From here, I modified the dataset by undersampling the number of pop tracks. Instead of having 7,000 more pop tracks than any other, I reduced the number of pop tracks to create a more even balance.
+#### B.
+From here, I modified the dataset by undersampling the number of pop tracks. Instead of having 7,000 more pop tracks than any other, I reduced the number of pop tracks to create a more even balance.
 
 | Genre   | TrackCount |
 |---------|------------|
@@ -180,7 +181,8 @@ Accuracy predicting rock : 0.6851512373968836
 
 While accuracy in predicting pop dropped by over 15%, other genres like hiphop, house, and country, increased by 5-10% each. This makes sense, as the undersampling reduced the likelihood that the model predicted overpredicted pop. 
 
-#### C. Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
+#### C.
+Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
 
 **Model Accuracy: 0.6776788148686722**
 
@@ -215,7 +217,7 @@ The accuracy of each different approach was summarized as follows:
 |          | r&b     | 0.424            | 0.548               | **0.549**              |
 |          | rock    | 0.635            | **0.685**               | 0.669              |
 
-In the notebook, I detail a longer discussion of the "why" , but I chose to explore the results of approach C for the conclusion of the project.
+In the notebook, I detail a longer discussion of the "why", but I chose to explore the results of approach C for the conclusion of the project.
 
 ### Results and Listening to the Predictions
 Once this model was hypertuned, I took a look at the specific predictions it made to see how *I* would classify these spotify tracks. These are some of the tracks that the model was **most** confident in predicting:
