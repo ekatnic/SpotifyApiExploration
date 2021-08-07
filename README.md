@@ -101,6 +101,8 @@ One interesting obeservation was how the error varied for different genres of mu
 
 It seems that its much easier to predict whether an Indie or classical song will succeed compared to predicting whether or not a pop song will. This may be because of how broad the classification of pop is, as patterns may be harder to nail down.
 
+Overall, I found this to be an intriguing project that made me rethink what subtle factors contribute to make a song blow up on the charts. In terms of future exploration, I plan on investigating whether these trends have changed over the years, i.e do the qualities that made a song popular in 2010 still apply in 2021?
+
 Check out the [Spotify_Analyze_Popularity.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Popularity.ipynb) notebook to see my full code for what qualities of a song are best used to predict popularity. 
 
 ## 2. Predicting Track Genre
@@ -286,7 +288,5 @@ Let's check some of these out:
 
 ### How to improve the genre model in the future
 It seems that the best place to focus on for future improvement of the genre predicting model would be to improve the true labeling of the tracks. Detailed in part 1, every track / artist outputted by the Spotify API has a number of genre tags, but there is not a single definitive genre for one track. To allow us to build a genre-predicting algorithm, the track genre tags were pooled into a dictionary and I chose the most occuring gender to determine the True Genre for that track. This is somewhat imperfect and likely lead to some faulty labeling of true genre. However, this was the best option available until Spotify labels the genre of the track themselves, or I come up with some other NLP improvements for the tag text.
-
-Overall, I found this to be an intriguing project that made me rethink what subtle factors contribute to make a song blow up on the charts. In terms of future exploration, I plan on investigating whether these trends have changed over the years, i.e do the qualities that made a song popular in 2010 still apply in 2021?
 
 To do your own explorations using the Spotify API, check out the documentation [here](https://developer.spotify.com/documentation/web-api/).
