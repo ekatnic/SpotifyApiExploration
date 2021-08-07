@@ -106,9 +106,146 @@ Check out the [Spotify_Analyze_Popularity.ipynb](https://github.com/ekatnic/Spot
 ## 2. Predicting Track Genre
 From there, I took on another challenge of trying to predict a song's genre based on these audio features alone, again excluding artist, as this essentially gave the genre away. See the full notebook of exploration here: [Spotify_Generate_Tracks.ipynb](https://github.com/ekatnic/SpotifyApiExploration/blob/master/Spotify_Analyze_Genre.ipynb). 
 
-The goal was to build a multi-class classifier that could predict a track's genre based on its audible features. I used the same dataset produced in part 0, but filtered to only tracks within the 7 most common genres. Those were the following:
+The goal was to build a multi-class classifier that could predict a track's genre based on its audible features. I used the same dataset produced in part 0, but filtered to only tracks within the 7 most common genres. Those genres were the following (along with the number of tracks we had for each genre:
 
+| Genre   | TrackCount |
+|---------|------------|
+| pop     | 17277      |
+| country | 10005      |
+| hiphop  | 10728      |
+| rock    | 8967       |
+| indie   | 7673       |
+| house   | 6529       |
+| r&b     | 5505       |
 
+![image](https://user-images.githubusercontent.com/25894069/128584060-b9097333-2d4a-4c92-b135-b1a38d0eb123.png)
+
+The imbalance of classes in the above list of genre counts was a major piece of this section of my project. I tried to build a few different models based on separate sampling techniques on the data. I performed the following 3 approaches to try to improve the model:
+
+### Building a model based on the imbalanced classes above
+ A. First, I built a basic random forest model using the data above with no changes to the class distribution. The results of that model were the following:
+
+  Model Accuracy: 0.6806779969099337
+  Accuracy predicting country : 0.7844257366205653
+  Accuracy predicting hiphop : 0.7706289671090595
+  Accuracy predicting house : 0.6566682048915552
+  Accuracy predicting indie : 0.6363636363636364
+  Accuracy predicting pop : 0.6996659046949182
+  Accuracy predicting r&b : 0.42412451361867703
+  Accuracy predicting rock : 0.6347264695888549
+![image](https://user-images.githubusercontent.com/25894069/128584091-26f42a6f-a723-4d47-9346-042dbe28a77c.png)
+
+  While this model performed relatively well, it was clear that the model was learning to favor pop tracks heavily. As visualize by the verticle column where `x = pop`, the model defaulted to classifying the sample as pop whenever there was doubt. Because of this, the accuracy in predicting other genres suffered as it overcompensated toward pop. 
+
+B.  From here, I modified the dataset by undersampling the number of pop tracks. Instead of having 7,000 more pop tracks than any other, I reduced the number of pop tracks to create a more even balance.
+
+| Genre   | TrackCount |
+|---------|------------|
+| pop     | 8000       |
+| hiphop  | 7962       |
+| country | 7585       |
+| rock    | 6785       |
+| indie   | 5740       |
+| house   | 4879       |
+| r&b     | 4161       |
+
+The overall accuracy of this model was about the same, but the change to the training data impacted where the model was accurate and where it was not:
+
+Model Accuracy: 0.6788518008030203
+Accuracy predicting country : 0.8107438016528926
+Accuracy predicting hiphop : 0.8380332610267535
+Accuracy predicting house : 0.7351515151515151
+Accuracy predicting indie : 0.6652871184687015
+Accuracy predicting pop : 0.5277777777777778
+Accuracy predicting r&b : 0.5476190476190477
+Accuracy predicting rock : 0.6851512373968836
+![image](https://user-images.githubusercontent.com/25894069/128584230-49412205-e6a0-4bcc-b9c0-46c98b7577a6.png)
+
+While accuracy in predicting pop dropped by over 15%, other genres like hiphop, house, and country, increased by 5-10% each. This makes sense, as the undersampling reduced the likelihood that the model predicted overpredicted pop. 
+
+C. Finally, I chose to try out using the SMOTE oversampling technique, which generates synthetic data of the underrepresented classes in order to balance all classes evenly. For this example, I had to make sure not to validate or test on this oversampled dataset. The results of this model are as follows:
+
+Model Accuracy: 0.6776788148686722
+Accuracy predicting country : 0.796452194828623
+Accuracy predicting hiphop : 0.7830351990767456
+Accuracy predicting house : 0.7000461467466543
+Accuracy predicting indie : 0.6382734912146677
+Accuracy predicting pop : 0.5987339546333743
+Accuracy predicting r&b : 0.5491939966648138
+Accuracy predicting rock : 0.6690451919809718
+![image](https://user-images.githubusercontent.com/25894069/128584329-f8e36532-c356-4757-8b63-695e05518ef9.png)
+
+This model produced results that were a bit of a blend of the above 2 results. Overall, accuracy was the same. However, it had worse pop accuracy than approach A, but better pop accuracy than approach B. Conversely, it had better accuracy for the minority classes than approach A, but worse accuracy on these for approach B.
+
+In the notebook, I detail a longer discussion of the "why" , but I chose to explore the results of approach C for the conclusion of the project.
+
+### Results and Listening to the Predictions
+Once this model was hypertuned, I took a look at the specific predictions it made to see how *I* would classify these spotify tracks. These are some of the tracks that the model was **most** confident in predicting:
+
+| Prediction   Confidence | Predicted Correctly | True Genre | Predicted Genre | Track Name              | Artist Name              |
+|-------------------------|---------------------|------------|-----------------|-------------------------|--------------------------|
+| 1                       | 1                   | r&b        | r&b             | Can We (with Kacy Hill) | Jim-E Stack              |
+| 0.99938                 | 1                   | r&b        | r&b             | Polaroids               | Jay Prince               |
+| 0.99875                 | 1                   | indie      | indie           | Song For Zula           | Phosphorescent           |
+| 0.9975                  | 1                   | r&b        | r&b             | John Redcorn            | SiR                      |
+| 0.9975                  | 1                   | rock       | rock            | Out of My League        | Fitz and The Tantrums    |
+| 0.99688                 | 1                   | rock       | rock            | Too Late                | The Happy Fits           |
+| 0.99688                 | 1                   | rock       | rock            | Pompeii                 | Bastille                 |
+| 0.99625                 | 1                   | hiphop     | hiphop          | I Mean It (feat. Remo)  | G-Eazy                   |
+
+* Here is the track by Jim-E Stack that the model correctly predicted as R&B: [Can We (with Kacy Hill) - Jim-E Stack](https://open.spotify.com/track/5mVWKI0OgsFIXF8aJccfO8?si=67ac936034124432)
+
+* Here is a track by Fitz and The Tantrums that the model correctly predicted as Rock: [Out of My League	Fitz and The Tantrums](https://open.spotify.com/track/2AYEOC02WLhUiOoaig2SEH?si=5abe7f31926b4f06)
+
+* Here is a track by Phosphorescent that the model correctly predicted as Indie: [Song For Zula - Phosphorescent](https://open.spotify.com/track/3zr2s3o2Ye1j6t0ZMdoUYi?si=c32ad6ac6c644a23)
+
+These all make sense, as they sound quintessentially R&B, Rock and Indie.
+
+More interesting will be looking at what tracks the model predicted *incorrectly*. Let's take a look at a few of those.
+
+| Prediction   Confidence | Predicted Correctly | True Genre | Predicted Genre | Track Name                                        | Artist Name         |
+|-------------------------|---------------------|------------|-----------------|---------------------------------------------------|---------------------|
+| 0.95938                 | 0                   | pop        | country         | Suitcase                                          | Steve Moakler       |
+| 0.92063                 | 0                   | pop        | house           | Dechorro                                          | Deorro              |
+| 0.91875                 | 0                   | pop        | hiphop          | Press                                             | Cardi B             |
+| 0.91375                 | 0                   | pop        | house           | Flying Blind                                      | Cosmic Gate         |
+| 0.90875                 | 0                   | pop        | house           | Raise Your Head                                   | Alesso              |
+| 0.90313                 | 0                   | house      | country         | Gonna Be Alright - Man Cub Remix                  | Tritonal            |
+| 0.9025                  | 0                   | pop        | house           | Lights                                            | Swedish House Mafia |
+| 0.89875                 | 0                   | pop        | house           | This Is What It Feels Like - W&W Remix            | Armin van Buuren    |
+
+Unsurprisingly, most of these missed predictions are true-genre pop. This is clearly the model's worst category at predicting, thought this was expected after we went with the Method #2 approach. Let's listen to a few of these in particular:
+
+* The first one in the list sounds a lot like country to me, despite its genre label being pop: [Suitcase -	Steve Moakler](https://open.spotify.com/track/0uhxXyG4Eb5sIIt3GZxJcn?si=f3c81e3fc9004886) The line between country, pop, and country-pop is certainly a blurry one, and this may be more of a failure of my labeling system rather than one by the model.
+
+*  Let's look at a track that isn't true-genre pop. This one is true-genre house: [Gonna Be Alright - Man Cub Remix	Tritonal](https://open.spotify.com/track/3wJYhSVsFnfKr46ufuZgjA?si=6b74d547dfc34868) This is a surprising one. This is a fairly obvious pop or house track, so it's quite surprising that the model labeled this country. This is a pretty bad miss.
+
+* Finally, this Cardi B song is a bit of a surprise: [Press - Cardi B](https://open.spotify.com/track/6dPyzkyZwoj9LqjQXOFdVv?si=ab252432ee5f4544). I would definitely have labeled this as hiphop, so this is another understandable mistake by the model. This seems to be more of a case of an unclear distinction between pop/hiphop or a mistake on the genre labeling.
+
+### Second Chances
+As a final exploration, I wanted to see how the model would do with not just one prediction, but 2 predictions to get the true genre correct. Taking the genres with the two highest predictive probabilities, the model's accuracy increased to about 82%, a 14% improvement from the model with only 1 prediction. 
+
+Let's look at which predictions this got wrong with both guesses. These are tracks that the model not only misclassified, but wasn't even close to classifying correctly:
+| Predicted   Correctly | True Genre | Predicted Genres | Track Name                                        | Artist Name    |
+|-----------------------|------------|------------------|---------------------------------------------------|----------------|
+| 0                     | country    | [hiphop, pop]    | Smoke Stack                                       | The Lacs       |
+| 0                     | house      | [country, pop]   | Mono in Love - Radio Edit                         | Edward Maya    |
+| 0                     | hiphop     | [house, rock]    | Tattoo                                            | Kevin Abstract |
+| 0                     | r&b        | [pop, hiphop]    | Dingo X BIBI - she got it                         | BIBI           |
+| 0                     | pop        | [house, rock]    | Gooey Rework                                      | Glass Animals  |
+| 0                     | country    | [r&b, pop]       | Telescope                                         | Nashville Cast |
+| 0                     | country    | [r&b, pop]       | Mother                                            | Sugarland      |
+| 0                     | hiphop     | [pop, house]     | I've Been Waiting (feat. ILOVEMAKONNEN) - Orig... | Lil Peep       |
+| 0                     | indie      | [pop, rock]      | We Must Be Killers                                | Mikky Ekko     |
+| 0                     | country    | [pop, hiphop]    | Snow White                                        | Katie Noel     |
+
+Let's check some of these out:
+*   [Smoke Stack - The Lacs](https://open.spotify.com/track/2XBYAG0RgFgzONthKkuaT5?si=d00724b4fac74469) - This one makes sense as a hiphop/pop track, as it's a pretty strange rap country fusion. 
+*   [Tattoo - Kevin Abstrac](https://open.spotify.com/track/2jEkD23p3LVw2D19OiFvMK?si=460fea7143af495b) - This example again makes sense why the model would miss it. The sound features an acoustic guitar and pretty traditional rock drums, although it's strange that the model predicted house and not something like Indie/Rock.
+*   [Boogieman - Childish Gambino](https://open.spotify.com/track/0SunFlwqT44E0BU0yrgM7u?si=5c52a9b7638143e7) - This one makes sense as just an extremely difficult song to predict. I would personally call this funk, perhaps? Of our genre's, I think hiphop is a fair true labell, but I'm not surprised the model missed this, given its unconventional sound.
+
+### How to improve the genre model in the future
+It seems that the best place to focus on for future improvement of the genre predicting model would be to improve the true labeling of the tracks. Detailed in part 1, every track / artist outputted by the Spotify API has a number of genre tags, but there is not a single definitive genre for one track. To allow us to build a genre-predicting algorithm, the track genre tags were pooled into a dictionary and I chose the most occuring gender to determine the True Genre for that track. This is somewhat imperfect and likely lead to some faulty labeling of true genre. However, this was the best option available until Spotify labels the genre of the track themselves, or I come up with some other NLP improvements for the tag text.
 
 Overall, I found this to be an intriguing project that made me rethink what subtle factors contribute to make a song blow up on the charts. In terms of future exploration, I plan on investigating whether these trends have changed over the years, i.e do the qualities that made a song popular in 2010 still apply in 2021?
 
